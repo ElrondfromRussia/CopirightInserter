@@ -3,6 +3,7 @@ import os
 
 
 COPYSTRING = "\\\\(c) Company Name\n"
+WFILE = ".go"
 
 
 ################################################################
@@ -13,7 +14,7 @@ def insert_everywhere(dir_name):
         raise Exception("empty path")
     for root, dirs, files in os.walk(dir_name):
         for file in files:
-            if file.endswith(".go"):
+            if file.endswith(WFILE):
                 with open(os.path.join(root, file), 'r+') as f:
                     lines = f.readlines()
                     f.seek(0)
@@ -26,9 +27,12 @@ def insert_everywhere(dir_name):
 ################################################################
 ################################################################
 def main():
+    global WFILE
     path = ""
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
         path = sys.argv[1]
+        WFILE = "." + sys.argv[2]
+    print(path, WFILE)
     try:
         print("START")
         insert_everywhere(path)
