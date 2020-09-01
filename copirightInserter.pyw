@@ -1,8 +1,8 @@
 import sys
 import os
 
-
-COPYSTRING = "\\\\(c) Company Name\n"
+COSN_COPYSTRING = "// Copyright 2020 Company name\n//\n"
+PY_COPYSTRING = "# Copyright 2020 Company name\n#\n"
 WFILE = ".go"
 
 
@@ -18,7 +18,10 @@ def insert_everywhere(dir_name):
                 with open(os.path.join(root, file), 'r+') as f:
                     lines = f.readlines()
                     f.seek(0)
-                    f.write(COPYSTRING)
+                    if WFILE in [".go", ".c", ".cpp", ".js"]:
+                        f.write(COSN_COPYSTRING)
+                    elif WFILE in [".py", ".pyw"]:
+                        f.write(PY_COPYSTRING)
                     for line in lines:
                         f.write(line)
 
@@ -40,6 +43,7 @@ def main():
         print("ERROR: ", ex)
     finally:
         print("END")
+
 
 ################################################################
 ################################################################
